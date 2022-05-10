@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <iomanip>
+#include <map>
 /************************************
  * Types, declarations and prototypes
  */
@@ -29,7 +30,7 @@ struct Transaction {
 };
 
 using PeopleMap = std::unordered_map<size_t, Person>;
-using AccountMap = std::unordered_map<size_t, AccountInfo>;
+using AccountMap = std::map<size_t, AccountInfo>;
 using TransactionVector = std::vector<Transaction>;
 
 
@@ -137,6 +138,9 @@ void printAccountInfo(std::ostream& stream, AccountMap const& ainfo_map,
     for (auto const& [aid, ainfo] : ainfo_map) {
         auto const& [name, balance, owner_id] = ainfo;
         auto const& owner_name = pinfo_map.at(owner_id).name;
+
+        //skriv ut laveste aid først
+
         stream << aid << ' ' << name << ' ' << owner_name << ' ';
         printAmount(stream, balance);
         stream << '\n';
