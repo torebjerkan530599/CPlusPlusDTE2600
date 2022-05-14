@@ -1,6 +1,7 @@
 #include <vector>
 #include <optional>
-
+#include <istream>
+#include <ostream>
 #ifndef HEADER_H
 #define HEADER_H
 

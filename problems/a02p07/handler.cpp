@@ -6,7 +6,12 @@ using namespace std;
 // The main function is the entry point for any program written in C++
 int main(int /*argc*/, char** /*argv*/)
 {
-  // Parameter
+	  // Create a forward list of chars
+	//two different ways of initializing a forward list
+
+	auto list = std::forward_list<char>{ 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd' };
+
+
 	forward_list<char> clist = { 's', 'w', 'e', 'e','t'};
 
   // Call the signature function

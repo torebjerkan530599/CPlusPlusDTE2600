@@ -17,7 +17,7 @@ std::string decode(std::ptrdiff_t* enc, char const** lookup)
         //std::cout << "tbl_idx: " << tbl_idx << " | " << "char_idx: " << char_idx << "\n";
         char const* tbl = *(lookup+tbl_idx);
         
-        //std::cout << "table address: " << (void*)tbl << " | " << "value: " << *tbl << "\n";
+        std::cout << "table address: " << reinterpret_cast<void const*>(tbl) << " | " << "value: " << *tbl << "\n";
         //std::cout << "char address: " << (void*)tbl[char_idx] << " | " << "value: " << *(tbl + char_idx) << "\n";
         //auto const* tbl = nullptr; //original
         message += *(tbl + char_idx);
