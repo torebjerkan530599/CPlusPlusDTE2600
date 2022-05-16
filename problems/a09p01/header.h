@@ -6,6 +6,71 @@
 #include <variant>
 #include <vector>
 
+//namespace ms::backend
+//{
+//    class MessageBackendSimulator
+//    {
+//    public:
+//
+//        // Types
+//        using SPtr = std::shared_ptr<MessageBackendSimulator>;
+//        using WPtr = std::weak_ptr<MessageBackendSimulator>;
+//
+//        // Insantiation
+//        static WPtr instance();
+//
+//        // Communication API
+//        Messages retrieveMessages();
+//
+//        void sendMessage(Message const& message);
+//        void sendMessages(Messages const& messages);
+//
+//        static WPtr instance()
+//        {
+//            if (not s_instance) s_instance = std::make_shared<MessageBackendSimulator>();
+//            return s_instance;
+//        }
+//
+//        Messages retrieveMessages()
+//        {
+//           MessageClient client();
+//            
+//            From from = "criteria";
+//            InMessage hint = "another criteria";
+//
+//            ms::Messages msgs = client().findMessages(MessageClient::MessageBoxType::Inbox, {from,hint});
+//            
+//            for (auto& msg : msgs)
+//            { 
+//                std::cout << "From: " << msg.from << 
+//                    " To: " << msg.to << 
+//                    " Date: " << msg.date << 
+//                    " Message: " << msg.message << "\n";
+//            }
+//                    
+//        }
+//
+//        void sendMessage(Message const& message)
+//        {
+//            //MessageClient client();
+//
+//            //client().sendMessage(message.from ,message.date, message.message);
+//        }
+//
+//        void sendMessages(Messages const& messages)
+//        {
+//            MessageClient client();
+//
+//            //for(auto &msg: messages)
+//            //    client().sendMessage(msg.from, msg.date, msg.message);
+//        }
+//
+//    private:
+//        static inline SPtr s_instance{ nullptr };
+//    };
+//}
+
+
 namespace ms
 {
 
@@ -23,6 +88,14 @@ namespace ms
     using Messages = std::vector<Message>;
     using MessageBox = std::vector<Message>;
 
+   /* std::ostream& operator<<(std::ostream& stream, ms::Message const& msg);
+
+    std::ostream& operator<<(std::ostream& stream, ms::Message const& msg)
+    {
+        return stream << msg.from << " " << msg.to << " "
+            << " " << msg.date << " " << msg.message << "\n";
+    }*/
+
 
 
     ///////////////////
@@ -32,12 +105,38 @@ namespace ms
     {
         namespace criterion
         {
-            struct From : std::string { using std::string::string; };
-            struct To : std::string { using std::string::string; };
-            struct DateInterval { MessageDate from; MessageDate to; };
-            struct InMessage : std::string { using std::string::string; };
+            struct From : std::string 
+            { 
+                using std::string::string; 
+            };
+            
+            struct To : std::string 
+            { 
+                using std::string::string; 
+            };
+            
+            struct DateInterval 
+            { 
+                MessageDate from; 
+                MessageDate to; 
+
+            };
+            struct InMessage : std::string 
+            { 
+                using std::string::string; 
+            };
 
         }   // namespace criterion
+
+        using namespace match::criterion;
+
+     /*   std::ostream& operator<<(std::ostream& stream, DateInterval const&);
+
+        std::ostream& operator<<(std::ostream& stream, DateInterval const& date)
+        {
+            return stream << 
+                "from date: " << date.from<< " to: " << date.to << "\n";
+        }*/
 
 
         using Criterion = std::variant<criterion::From, criterion::To,
