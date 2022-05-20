@@ -84,11 +84,12 @@ project(dte2600_TEMPLATE_SOURCE VERSION 0.1 LANGUAGES CXX)
 #add_subdirectory(problems/a08p02) #calculate if two, single or complex roots
 #add_subdirectory(problems/a08p03) #Accounting.using AccountMap = std::map<size_t, AccountInfo>; using PeopleMap = std::unordered_map<size_t, Person auto const& [aid, ainfo] : ainfo_map auto const& [name, balance, owner_id] = ainfo;auto const& from_account = ainfo_map.at(aid_from).name; auto const& to_account = ainfo_map.at(aid_to).name;
 #add_subdirectory(problems/a08p04) # fib. std::adjacent_difference(std::begin(fib) + 1, std::prev(std::end(fib)), std::next(std::begin(fib) + 1), std::plus<>{}); printout:sr::copy(fib, std::ostream_iterator<int>(std::cout, " ")); std::cout << '\n';std::cout << "Reverse (from " << I << ") ":  sr::reverse_copy(std::cbegin(fib), std::cbegin(fib)+I+1, std::ostream_iterator<int>(std::cout, " "));
-# add_subdirectory(problems/a08p05) #postponed
+add_subdirectory(problems/a08p05) #postponed
 # add_subdirectory(problems/a08p06) #decode(std::ptrdiff_t* enc, char const** lookup):  auto const char_idx = enc[i+ 1];  char const* tbl = *(lookup+tbl_idx);
 # add_subdirectory(problems/a08p07) #mail sorting,  sr::sort(mail, lvl3_comp, lvl3_proj); lvl3_comp = [](auto const& lhs, auto const& rhs) ...; auto const proj_hlpr = [];auto const lvl3_proj = [proj_hlpr, lvl3](MessageHeader const& header)
 # add_subdirectory(problems/a08p08) # guarding bit shift agains overflows: if(shift >= sizeof(unsigned) * 8)
-add_subdirectory(problems/a09p01)
+#add_subdirectory(problems/a09p01)
+#add_subdirectory(problems/a09p02)
 ###########################################
 # Qt creator dummy target
 option(DUMMY_TARGET "Dummy target..." TRUE)

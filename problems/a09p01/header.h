@@ -33,36 +33,22 @@
 //
 //        Messages retrieveMessages()
 //        {
-//           MessageClient client();
-//            
-//            From from = "criteria";
-//            InMessage hint = "another criteria";
-//
-//            ms::Messages msgs = client().findMessages(MessageClient::MessageBoxType::Inbox, {from,hint});
-//            
-//            for (auto& msg : msgs)
-//            { 
-//                std::cout << "From: " << msg.from << 
-//                    " To: " << msg.to << 
-//                    " Date: " << msg.date << 
-//                    " Message: " << msg.message << "\n";
-//            }
-//                    
+//			ms::MessageBox& mbox =
+//			
+//			std::ranges::find(
+//				
+//				
+//				MessageClient::MessageBoxType::Inbox;
 //        }
 //
-//        void sendMessage(Message const& message)
+//		void sendMessage(Message const& message)
 //        {
-//            //MessageClient client();
-//
-//            //client().sendMessage(message.from ,message.date, message.message);
+//			MessageClient::MessageBoxType::Outbox;
 //        }
 //
 //        void sendMessages(Messages const& messages)
 //        {
-//            MessageClient client();
-//
-//            //for(auto &msg: messages)
-//            //    client().sendMessage(msg.from, msg.date, msg.message);
+//			MessageClient::MessageBoxType::Outbox;
 //        }
 //
 //    private:
@@ -74,122 +60,114 @@
 namespace ms
 {
 
-    ///////////
-    // Messages
+	///////////
+	// Messages
 
-    using MessageDate = std::chrono::year_month_day;
+	using MessageDate = std::chrono::year_month_day;
 
-    struct Message {
-        std::string from;
-        std::string to;
-        MessageDate date;
-        std::string message;
-    };
-    using Messages = std::vector<Message>;
-    using MessageBox = std::vector<Message>;
+	struct Message {
+		std::string from;
+		std::string to;
+		MessageDate date;
+		std::string message;
+	};
+	using Messages = std::vector<Message>;
+	using MessageBox = std::vector<Message>;
 
-   /* std::ostream& operator<<(std::ostream& stream, ms::Message const& msg);
-
-    std::ostream& operator<<(std::ostream& stream, ms::Message const& msg)
-    {
-        return stream << msg.from << " " << msg.to << " "
-            << " " << msg.date << " " << msg.message << "\n";
-    }*/
+	std::ostream& operator<<(std::ostream& stream, ms::Message const& msg);
 
 
+	 ///////////////////
+	 // Message Matching
 
-    ///////////////////
-    // Message Matching
+	namespace match
+	{
+		namespace criterion
+		{
+			struct From : std::string
+			{
+				using std::string::string;
+			};
 
-    namespace match
-    {
-        namespace criterion
-        {
-            struct From : std::string 
-            { 
-                using std::string::string; 
-            };
-            
-            struct To : std::string 
-            { 
-                using std::string::string; 
-            };
-            
-            struct DateInterval 
-            { 
-                MessageDate from; 
-                MessageDate to; 
+			struct To : std::string
+			{
+				using std::string::string;
+			};
 
-            };
-            struct InMessage : std::string 
-            { 
-                using std::string::string; 
-            };
+			struct DateInterval
+			{
+				MessageDate from;
+				MessageDate to;
 
-        }   // namespace criterion
+			};
+			struct InMessage : std::string
+			{
+				using std::string::string;
+			};
 
-        using namespace match::criterion;
+		}   // namespace criterion
 
-     /*   std::ostream& operator<<(std::ostream& stream, DateInterval const&);
+		using namespace match::criterion;
 
-        std::ostream& operator<<(std::ostream& stream, DateInterval const& date)
-        {
-            return stream << 
-                "from date: " << date.from<< " to: " << date.to << "\n";
-        }*/
+		using Criterion = std::variant<criterion::From, criterion::To,
+			criterion::DateInterval, criterion::InMessage>;
+		using Criteria = std::vector<Criterion>;
 
-
-        using Criterion = std::variant<criterion::From, criterion::To,
-            criterion::DateInterval, criterion::InMessage>;
-        using Criteria = std::vector<Criterion>;
-
-    }   // namespace match
+	}   // namespace match
 
 
 
-    /////////////
-    // The Client
+	/////////////
+	// The Client
 
-    namespace messageclient
-    {
-        bool criteriaMatcher(match::Criteria filter, Message const& message);
-    }
+	namespace messageclient
+	{
+		bool criteriaMatcher(match::Criteria filter, Message const& message);
+	}
 
-    class MessageClient
-    {
-    public:
+	class MessageClient
+	{
+	public:
 
-        // Message box types
-        enum class MessageBoxType { Inbox, Outbox, Sent, Spam, Trash };
+		// Message box types
+		enum class MessageBoxType { Inbox, Outbox, Sent, Spam, Trash};
+	
 
-        // Constructor
-        MessageClient(std::string owner);
+		// Constructor
+		MessageClient(std::string owner);
 
-        // Public API
-        std::string const& owner() const;
-        void               sendMessage(std::string to, MessageDate date, std::string message);
-        Messages           findMessages(MessageBoxType  where, match::Criteria filter = {}) const;
-        void               deleteMessages(MessageBoxType where, match::Criteria filter = {});
-        void               setSpamFilter(match::Criteria filter = {});
-        void               sync();
+		// Public API
+		std::string const& owner() const;
+		void               sendMessage(std::string to, MessageDate date, std::string message);
+		Messages           findMessages(MessageBoxType  where, match::Criteria filter = {}) const;
+		void               deleteMessages(MessageBoxType where, match::Criteria filter = {});
+		void               setSpamFilter(match::Criteria filter = {});
+		void               sync();
 
+		
+		
 
-    private:
+	private:
 
-        // Private types
-        using MessageBoxes = std::unordered_map<MessageBoxType, MessageBox>;
-        using MBoxIterator = MessageBox::const_iterator;
-        using MBoxConstIterators = std::vector<MBoxIterator>;
+		// Private types
+		using MessageBoxes = std::unordered_map<MessageBoxType, MessageBox>;
+		using MBoxIterator = MessageBox::const_iterator;
+		using MBoxConstIterators = std::vector<MBoxIterator>;
 
-        // Private members
-        std::string     m_owner;
-        MessageBoxes    m_messageboxes;
-        match::Criteria m_spam_filter;
+		// Private members
+		std::string     m_owner;
+		MessageBoxes    m_messageboxes;
+		match::Criteria m_spam_filter;
 
-        // Private helper functions
-        MBoxConstIterators search(MessageBoxType where, match::Criteria filter) const;
-        MessageBox& messageBox(MessageBoxType which);
-        MessageBox const& messageBox(MessageBoxType which) const;
-    };
+		// Private helper functions
+		MBoxConstIterators search(MessageBoxType where, match::Criteria filter) const;
+		MessageBox& messageBox(MessageBoxType which);
+		MessageBox const& messageBox(MessageBoxType which) const;
+	};
+	
+	//template<typename MessageBoxType, typename MessageBoxes>
+	//std::ostream& operator<<(std::ostream& os,
+	//	std::unordered_map<MessageBoxType, MessageBoxes>& m);
+	
 
 } // END namespace ms

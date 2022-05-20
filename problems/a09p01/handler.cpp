@@ -22,23 +22,25 @@ int main(int /*argc*/, char** /*argv*/)
 	//The criteria
 	From from = "Scrooge";
 	To to = "Donald";
-	InMessage hint = "you owe me";
+	InMessage hint = "z";
 	DateInterval date_interval = { January / 1 / 2022, March / 5 / 2022 };
 	
 	//compare message and criteria
-	auto is_match = criteriaMatcher({from, to, date_interval, hint }, msg);
+	auto is_match = criteriaMatcher({ hint }, msg);
 
 	if(is_match)
 		std::cout << "A perfect Match!" << std::endl;
 
-	////set up a client
-	//MessageClient client("Donald \"the dev\" Duck");
+	// Construct the client
+	MessageClient client("Donald \"the dev\" Duck");
 
+	// Sync against the "world".
+	//client.sync();
 	////Send a message
-	//client.sendMessage("Dolly", January / 1 / 2022, "Quack Quack !!");
+	client.sendMessage("Dolly", April / 4 / 2022, "Quack Quack !!");
 
-	////Find messages
-	//auto result = client.findMessages(MessageClient::MessageBoxType::Inbox, { from = "Dolly"});
+	//Find messages
+	auto result = client.findMessages(MessageClient::MessageBoxType::Outbox, { to = "Dolly"});
 
 	////Delete messages
 	//client.deleteMessages(ms::MessageClient::MessageBoxType::Outbox);

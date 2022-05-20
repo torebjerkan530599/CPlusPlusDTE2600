@@ -4,6 +4,7 @@
 #include <functional>
 #include <numeric>
 #include <array>
+#include <memory>
 
 namespace sr = std::ranges;
 namespace sv = std::views;
@@ -69,11 +70,13 @@ int main(int /*argc*/, char** /*argv*/)
     int size;
     std::cin >> size;
 
+
+    
     // Init board
-    std::unique_ptr<TTTBase> ttt_game;
-    if (size == 2) ttt_game = std::make_unique<TTT<2ul>>();
-    else if (size == 3) ttt_game = std::make_unique<TTT<3ul>>();
-    else if (size == 4) ttt_game = std::make_unique<TTT<4ul>>();
+        std::unique_ptr<TTTBase> ttt_game;
+        if (size == 2) ttt_game = std::make_unique<TTT<2ul>>();
+        else if (size == 3) ttt_game = std::make_unique<TTT<3ul>>();
+        else if (size == 4) ttt_game = std::make_unique<TTT<4ul>>();
     else {
         std::cout << "Illegal Board Size\n";
         return 0;
@@ -124,29 +127,31 @@ TTT<boardsize_ST>::PieceSet TTT<boardsize_ST>::concatinatedBoard() const
 template <size_t boardsize_ST>
 size_t TTT<boardsize_ST>::to1D(IndexType x, IndexType y) const
 {
-    //row nr. * #columns + column nr.
     return x * boardsize_ST + y;
 }
 
 template <size_t boardsize_ST>
 void TTT<boardsize_ST>::printBoard() const
 {
+
     auto const& [X, O] = m_pieces;
     for (size_t const y : sv::iota(0, int(boardsize_ST))) {
         for (size_t const x : sv::iota(0, int(boardsize_ST))) {
             auto const idx_1d = to1D(x, y);
-            //bool test1 = currentPlayerIndex() == X.any();
-            //bool test2 = currentPlayerIndex() == Y;
-
-            //auto itr = sr::find(X, '1');
 
             if (X.test(idx_1d))
-                std::cout << 'X';
+            {  
+                    std::cout << 'X';
+            }
             else if (O.test(idx_1d))
-                std::cout << 'O';
+            {
+                    std::cout << 'O';
+            }
             else
-                std::cout << ' ';
-            std::cout << ' ';
+            { 
+               std::cout << ' ';
+            }
+        std::cout << ' ';
         }
         std::cout << '\n';
     }
@@ -157,8 +162,24 @@ void TTT<boardsize_ST>::printBoard() const
 template <size_t boardsize_ST>
 bool TTT<boardsize_ST>::isLegalMove(IndexType x, IndexType y) const
 {
-    return true;
-    //return (x < boardsize_ST) && (x > 0) && (y < boardsize_ST) && (y > 0);
+    auto test3 = to1D(x, y);
+    auto test4 = to1D(x, y);
+    auto test5 = m_pieces[0].size();
+    auto test6 = m_pieces.at(0);
+    
+    if (boardsize_ST <= x || boardsize_ST <= y)
+    {
+        return false;
+    }
+    else if (to1D(x, y) < m_pieces[0].size() && (x >= 0) && (y >= 0))
+    {
+        if (m_pieces[0].test(to1D(x, y)) || m_pieces[1].test(to1D(x, y))) //true if occupied
+            return false;
+        
+        return true;
+    }
+    else
+        return false;
 }
 
 template <size_t boardsize_ST>
@@ -166,10 +187,6 @@ void TTT<boardsize_ST>::move(IndexType x, IndexType y) noexcept
 {
     m_pieces[0].set(to1D(x, y));
     m_pieces[1].set(to1D(x, y));
-    std::cout << '\n';
-    std::cout << "X set: " << m_pieces[0] << '\n';
-    std::cout << '\n';
-    std::cout << "Y set: " << m_pieces[1] << '\n';
     swapCurrentPlayer();
 }
 
@@ -187,6 +204,5 @@ void TTTBase::swapCurrentPlayer()
 
 TTTBase::IndexType TTTBase::currentPlayerIndex() const
 {
-    //IndexType test = IndexType(m_current_player);
     return IndexType(m_current_player);
 }
