@@ -1,5 +1,5 @@
 Dette er mine innleveringer i emnet DTE2600 - programmering i C++
-Se https://en.uit.no/utdanning/emner/emne?p_document_id=858785 for detaljert beskrivelse.
+Se https://en.uit.no/utdanning/emner/gammeltemne?p_document_id=744611 for detaljert beskrivelse.
 
 Utdrag:
 * Utviklingsverktøy og bygging av programmer
