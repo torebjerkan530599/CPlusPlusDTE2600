@@ -41,6 +41,10 @@ if (-not $vsPath) {
     Write-Error "Fant ingen Visual Studio-installasjon med C++-verktoy (Desktop development with C++). Se STUDIEGUIDE.md."
 }
 
+# Launch-VsDevShell.ps1 kaller internt vswhere.exe uten full sti, sa den ma
+# vare pa PATH forst for a unnga en (ufarlig) "not recognized"-feilmelding.
+$env:PATH = "C:\Program Files (x86)\Microsoft Visual Studio\Installer;$env:PATH"
+
 $devShell = Join-Path $vsPath "Common7\Tools\Launch-VsDevShell.ps1"
 & $devShell -Arch amd64 -HostArch amd64 -SkipAutomaticLocation *> $null
 
