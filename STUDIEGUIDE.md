@@ -4,6 +4,85 @@ Denne filen er et kart over pensum basert pa kommentarene i rot-[CMakeLists.txt]
 (som i praksis er en oppgaveliste med stikkord for hvert tema), pluss noen
 observasjoner fra a ha gatt gjennom losningene.
 
+## Laereplan (kronologisk)
+
+Dette er den faktiske progresjonen gjennom kurset - hvert delkapittel bygger
+pa begrepene fra det forrige. Se "Pensumkart" lenger ned for oppgave-for-
+oppgave-detaljer.
+
+### Del 1 - Grunnleggende program-I/O (a01, 9 oppgaver)
+Mal: fa inn/ut-data til a fungere (argc/argv, stdin/stdout), og bli kjent
+med de to oppgavearketypene som brukes resten av kurset.
+- a01p01-a01p04: fra ingen input til flere datapunkter inn/ut
+- a01p05: forste mote med `ranges::transform`/`ranges::accumulate` - en
+  forsmak pa del 5-6
+- a01p06-a01p09: introduserer signature-funksjon-arketypen (fast
+  grensesnitt du implementerer mot), med `ranges::sort` og `std::pair`
+
+### Del 2 - Sprakgrunnlag (a02, 16 oppgaver)
+Mal: fundamentale C++-byggeklosser - typer, operatorer, kontrollstruktur,
+pekere.
+- a02p01-a02p03: Hello World, stream-formatering (`iomanip`), `sizeof`
+- a02p04-a02p06: funksjoner, aritmetiske og logiske/bitvise operatorer
+- a02p07-a02p10: kontrollstrukturer (while/for/switch/if) + forste mote
+  med en container (`forward_list`)
+- a02p11-a02p16: pekere og arrayer i okende kompleksitet, fra
+  `nullptr`-sjekk til 2D-indeksering, avsluttet med lokke-basert
+  input-parsing
+
+### Del 3 - Klasser, typer og feilhandtering (a03, 8 oppgaver)
+Mal: ga fra frittstaende funksjoner til a definere egne typer.
+- a03p01-a03p02: `stringstream`, `static_cast`
+- a03p03: medlemsfunksjoner i en klasse - forste egendefinerte klasse
+- a03p04-a03p05: unions/variant/optional, enum
+- a03p06-a03p07: namespaces, structured bindings
+- a03p08: feilhandtering (exceptions vs. optional-returverdi) - runder av
+  med hvordan en klasse svarer pa ugyldige tilstander
+
+### Del 4 - Objektorientert programmering (a04, 8 oppgaver)
+Mal: klassisk OOP - polymorfi, ressursstyring, operatoroverlasting.
+- a04p01: konkrete klasser + weak ordering (`operator<=>`)
+- a04p02-a04p03: abstrakte klasser, polymorfi, `dynamic_cast`
+- a04p04-a04p05: RAII, smarte pekere, kopi-/move-semantikk
+- a04p06: Rule of Three/Five/Zero - kjernen i ressurshandtering (kjent
+  svakt punkt, se under)
+- a04p07-a04p08: sammenlignings- og stream-operatorer
+
+### Del 5 - Generisk programmering og iteratorer (a05, 10 oppgaver)
+Mal: fra konkrete klasser til gjenbrukbar, generisk kode; skrive egne
+iteratorer; mote de forste STL-algoritmene.
+- a05p01-a05p02: generiske funksjoner og klasser
+- a05p03-a05p04: egne iteratorer - en forutsetning for a forsta det meste
+  av del 6-7
+- a05p05-a05p06: funksjonsobjekter og lambdaer
+- a05p07-a05p09: algoritmer + predikater (`sort`, `for_each`, `transform`)
+- a05p10: ranges og views - broen over til del 6
+
+### Del 6 - Sortering og sok (a06, 9 oppgaver)
+Mal: STL sin sorterings- og sokefamilie i dybden.
+`partial_sort` -> `nth_element` -> heap-operasjoner -> `find`-varianter ->
+`binary_search` -> sok i delsekvenser (`search`/`find_end`/`find_first_of`,
+med projeksjoner) -> `minmax_element` -> predikat-sporringer (`all_of`/
+`any_of`/`mismatch`)
+
+### Del 7 - Permutasjon og containere (a07, 8 oppgaver)
+Mal: mer avanserte algoritmer + et bredere containerlandskap.
+Permutasjon/rotasjon -> partisjonering -> mengdealgoritmer -> kopier/flytt-
+monstre -> sammenhengende containere (`array`) -> liste-containere
+(`list`/`forward_list`) -> assosiative containere (`map`/`unordered_map`)
+
+### Del 8 - Blandet/avansert (a08, 4 pensumoppgaver)
+Mal: sette sammen det du har lart i friere, mer virkelighetsnaere
+oppgaver. a08p01-a08p04 er de reelle pensumoppgavene (uttrykk med
+iteratorer, andregradsligning, et "accounting"-eksempel med maps og
+structured bindings, og Fibonacci med `adjacent_difference`).
+a08p05-a08p08 er ikke pensum i vanlig forstand - se "Pensumkart" under.
+
+### Etter pensum - a09 (ufullfort)
+Et mer apent, avsluttende prosjekt (meldingsklient / rom-domenemodell) som
+aldri ble ferdigstilt. Naturlig neste steg etter du har repetert a01-a08,
+om du vil prove deg pa noe storre og mer selvstendig.
+
 ## To oppgavetyper
 
 - **main.cpp** (`problem_templates/main_function`): ett program som leser
