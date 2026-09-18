@@ -71,11 +71,14 @@ $inFile = Join-Path $srcDir "dat\example_data.in"
 $outFile = Join-Path $srcDir "dat\example_data.out"
 
 Write-Host "==> Kjorer $Id ..." -ForegroundColor Cyan
+# Ekte fil-omdirigering via cmd /c, ikke PowerShell-pipe - PowerShell sin
+# "streng | native.exe"-pipe skriver om stdin-encodingen og kan odelegge
+# std::cin-parsing (f.eks. tall) selv om filinnholdet er helt greit.
 if (Test-Path $inFile) {
-    $actual = (Get-Content $inFile -Raw) | & $exe | Out-String
+    $actual = (cmd /c "`"$exe`" < `"$inFile`"") | Out-String
 }
 else {
-    $actual = "" | & $exe | Out-String
+    $actual = (cmd /c "`"$exe`" < NUL") | Out-String
 }
 Write-Host $actual
 
