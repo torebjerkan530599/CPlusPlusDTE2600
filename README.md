@@ -12,3 +12,10 @@ Utdrag:
 * Feilsøking (debugging)
 * Kjøretidsmåling (benchmarking)
 * Avanserte emner e.g.: polymorfisme, generisk programmering, legacy-kode og pekere, assembleren og kompilatoren sine innstillinger
+
+## Repetisjon
+
+Se [STUDIEGUIDE.md](STUDIEGUIDE.md) for et pensumkart over alle oppgavene,
+og `tools/run-problem.ps1` / `tools/new-problem.ps1` for a bygge/kjore
+oppgaver og opprette nye ovingsoppgaver fra terminalen. Bygges med CMake +
+MSVC (Visual Studio 2022) + Ninja.
